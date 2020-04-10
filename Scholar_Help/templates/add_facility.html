@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "ministries_sidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1> Facilities </h1>
+
+                    </div>
+
+                </div>
+                 <div class="card card-primary">
+                                            <div class="card-body">
+
+
+                 <div class="row">
+                          <div class="col-md-6">
+
+                               <div class="form-group">
+                                <label for="exampleInputEmail1">Name</label>
+                                <input type="text" class="form-control" id="service" name="service" value="HSC result" required>
+                              </div>
+
+
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-md-6">
+
+                              <div class="form-group">
+                                <label for="exampleInputFile">Upload Image</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" class="" id="document" required>
+                                        <button class="btn btn-primary mr-4">Upload</button>
+
+                                  </div>
+                                </div>
+                              </div>
+
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+            </div>
+                 </div>
+
+
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+             <div class="card card-primary">
+                                            <div class="card-body">
+
+                <div class="row">
+
+          <div class="col-md-3 col-sm-6 col-12">
+               <a href="#" class="text-dark">
+
+                <div class="card" style="width: 15rem;">
+                  <img src="{% static '/image/adharcard.jpeg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="text-center">Service One</h5>
+
+                  </div>
+                </div></a>
+          </div>
+          <!-- /.col -->
+
+             <div class="col-md-3 col-sm-6 col-12">
+               <a href="#" class="text-dark">
+
+                <div class="card" style="width: 15rem;">
+                  <img src="{% static '/image/adharcard.jpeg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="text-center">Service One</h5>
+
+                  </div>
+                </div></a>
+          </div>
+          <!-- /.col -->
+
+             <div class="col-md-3 col-sm-6 col-12">
+               <a href="#" class="text-dark">
+
+                <div class="card" style="width: 15rem;">
+                  <img src="{% static '/image/adharcard.jpeg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="text-center">Service One</h5>
+
+                  </div>
+                </div></a>
+          </div>
+          <!-- /.col -->
+
+             <div class="col-md-3 col-sm-6 col-12">
+               <a href="#" class="text-dark">
+
+                <div class="card" style="width: 15rem;">
+                  <img src="{% static '/image/adharcard.jpeg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="text-center">Service One</h5>
+
+                  </div>
+                </div></a>
+          </div>
+          <!-- /.col -->
+
+
+
+
+        </div>
+        <!-- /.row -->
+                                            </div>
+             </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }],
+                "order": [[0, "desc"]]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

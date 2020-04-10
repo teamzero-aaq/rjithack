@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "sidebar_user.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Verified Documents</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Verified Documents
+                                </h3>
+                            </div>
+
+                            <!-- /.card-header -->
+
+
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+
+                                        <th>Document Name</th>
+                                        {#                                        <th>Issued Date</th>#}
+                                        <th class="no-sort">Download</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {##}
+                                    {#                                    {% for key,values in applied_schemes.items %}#}
+
+                                    {#                                            <td>{{ key }}</td>#}
+                                    {#                                            <td>{{ values.scheme_name }}#}
+                                    {#                                            </td>#}
+                                    {#                                            <td>{{ values.schemeamount }}</td>#}
+                                    {#                                            <td>{{ values.username }}</td>#}
+                                    {#                                            <td>{{ values.userid }}</td>#}
+                                    {#                                            <td>{{ values.status }}</td>#}
+                                    {#                                            <td>#}
+                                    {#                                                <form method="post" action="/takeaction">#}
+                                    {#                                                    {% csrf_token %}#}
+                                    {#                                                    <input type="hidden" name="userphone" id="userphone"#}
+                                    {#                                                           value="{{ values.userid }}"/>#}
+                                    {#                                                    <input type="hidden" name="applicationid" id="applicationid"#}
+                                    {#                                                           value="{{ key }}"/>#}
+                                    {#                                                    {% if  values.status == "Approve" %}#}
+                                    {#                                                        <button type="submit" class="btn btn-sm">#}
+                                    {#                                                            <span class="text-info"> View </span>#}
+                                    {#                                                        </button>#}
+                                    {#                                                    {% endif %}#}
+                                    {#                                                    {% if values.status == "Reject" %}#}
+                                    {#                                                        <p>#}
+                                    {#                                                            <button type="submit" class="btn btn-sm">#}
+                                    {#                                                                <span class="text-info">Change</span>#}
+                                    {#                                                            </button>#}
+                                    {#                                                        </p>#}
+                                    {#                                                    {% endif %}#}
+                                    {#                                                    {% if  values.status == "Pending" %}#}
+                                    {##}
+                                    {#                                                        <button type="submit" class="btn btn-sm">#}
+                                    {#                                                            <span class="text-info"> Take Action</span>#}
+                                    {#                                                        </button>#}
+                                    {##}
+                                    {#                                                    {% endif %} {% if  values.status == "In-Progress" %}#}
+                                    {##}
+                                    {#                                                    <button type="submit" class="btn btn-sm">#}
+                                    {#                                                        <span class="text-info"> Take Action</span>#}
+                                    {#                                                    </button>#}
+                                    {##}
+                                    {#                                                {% endif %}#}
+                                    {#                                                </form>#}
+                                    {##}
+                                    {##}
+                                    {#                                            </td>#}
+
+
+                                    {#                                    {% endfor %}#}
+
+
+
+                                    {% for values in alldoc %}
+
+
+                                        <tr>
+                                            <td>{{ values.sname }}</td>
+                                            {#                                            <td>12-12-1234</td>#}
+                                            <td>
+                                                <a class="btn btn-success" href="{{ values.url }}" target="_blank">Download</a>
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }],
+                "order": [[0, "desc"]]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

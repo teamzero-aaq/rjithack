@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "sidebar_user.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+
+
+                            <!-- /.card-header -->
+
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    {% for key,val in scheme.items %}
+
+                                        <div class="col-md-6 col-sm-6 col-12">
+                                            <a href="/schemedetails/{{ key }}" class="text-dark">
+
+                                                <div class="card">
+
+                                                    <div class="card-body">
+                                                        <h4 class="text-center">{{ val.name }}</h4>
+
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- /.col -->
+
+                                    {% endfor %}
+
+
+                                </div>
+                                <!-- /.row -->
+
+                            </div>
+
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }],
+                "order": [[0, "desc"]]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

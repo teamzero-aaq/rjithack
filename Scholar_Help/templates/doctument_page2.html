@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+    <style>
+        .modal-lg {
+            max-width: 80%;
+        }
+
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "sidebar_user.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{{ servicedetails.name }}</h1>
+                        <h1>{{ error }}</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="modal fade" id="modal-wait">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Please wait ...</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Uploading document</p>
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+
+
+                            <!-- /.card-header -->
+
+
+                            <div class="card-body">
+
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <form action="/validatedoc" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                           value="{{ user.name }}" disabled>
+                                                </div>
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-md-6">
+                                                <p>{{ users }}</p>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Birth Date</label>
+                                                    <input type="text" class="form-control" id="bdate" name="bdate"
+                                                           value="{{ user.dob }}" disabled>
+                                                </div>
+
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <!-- /.row -->
+
+                                        <div class="row">
+                                            <p>{{ extractedInformation|linebreaks }}</p>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile">Uploaded Document</label>
+                                                    <div class="input-group">
+                                                        <div class="custom-file">
+
+                                                            <input type="hidden" class="" name="fileurl" id="fileurl"
+                                                                   required value="{{ urllink }}">
+                                                            <input type="hidden" class="" name="key" id="key"
+                                                                   required value="{{ key }}">
+                                                            <input type="hidden" class="" name="sername" id="sername"
+                                                                   required value="{{ servicedetails.name }}">
+                                                            <a href="{{ urllink }}" target="_blank"
+                                                               class="btn btn-primary mr-4">View
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Certificate No.</label>
+                                                    <input type="text" class="form-control" id="cno" name="cno"
+                                                           value="{{ foundsrno }}">
+                                                </div>
+
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <!-- /.row -->
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Name as in Document</label>
+                                                    <input type="text" class="form-control" disabled
+
+                                                           value="{{ foundname }}">
+                                                    <input type="hidden" class="form-control" id="name_doc"
+                                                           name="name_doc"
+
+                                                           value="{{ foundname }}">
+                                                </div>
+
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Verify Document</label><br>
+
+                                                    <button class="btn btn-success" type="submit">Authenticate</button>
+
+                                                    <!-- Button trigger modal -->
+                                                    {#                                                    <button type="button" class="btn btn-default" data-toggle="modal"#}
+                                                    {#                                                            data-target="#modal-lg">#}
+                                                    {#                                                        View Details#}
+                                                    {#                                                    </button>#}
+                                                    {% csrf_token %}
+                                                    {#                                                    <!-- /.modal -->#}
+                                                    {##}
+                                                    {#                                                    <div class="modal fade" id="modal-lg">#}
+                                                    {#                                                        <div class="modal-dialog modal-lg">#}
+                                                    {#                                                            <div class="modal-content">#}
+                                                    {#                                                                <div class="modal-header">#}
+                                                    {#                                                                    <h4 class="modal-title">View Details</h4>#}
+                                                    {#                                                                    <button type="button" class="close"#}
+                                                    {#                                                                            data-dismiss="modal" aria-label="Close">#}
+                                                    {#                                                                        <span aria-hidden="true">&times;</span>#}
+                                                    {#                                                                    </button>#}
+                                                    {#                                                                </div>#}
+                                                    {#                                                                <div class="modal-body">#}
+                                                    {#                                                                    <div class="card-body table-responsive p-0">#}
+                                                    {#                                                                        <table class="table table-hover text-nowrap">#}
+                                                    {#                                                                            <thead>#}
+                                                    {#                                                                            <tr>#}
+                                                    {#                                                                                <th>Originallity</th>#}
+                                                    {#                                                                                <th>Status</th>#}
+                                                    {#                                                                                <th>Reason</th>#}
+                                                    {#                                                                            </tr>#}
+                                                    {#                                                                            </thead>#}
+                                                    {#                                                                            <tbody>#}
+                                                    {#                                                                            <tr>#}
+                                                    {#                                                                                <td>Name</td>#}
+                                                    {#                                                                                <td>#}
+                                                    {#                                                                                    <sapn class="text-success"><i#}
+                                                    {#                                                                                            class="fas fa-check text-success"></i>#}
+                                                    {#                                                                                        Approved#}
+                                                    {#                                                                                    </sapn>#}
+                                                    {#                                                                                    <sapn class="text-danger"><i#}
+                                                    {#                                                                                            class="fas fa-times text-danger"></i>#}
+                                                    {#                                                                                        Rejected#}
+                                                    {#                                                                                    </sapn>#}
+                                                    {#                                                                                </td>#}
+                                                    {#                                                                                <td>Bacon ipsum dolor sit amet salami#}
+                                                    {#                                                                                </td>#}
+                                                    {#                                                                            </tr>#}
+                                                    {#                                                                            </tbody>#}
+                                                    {#                                                                        </table>#}
+                                                    {#                                                                    </div>#}
+                                                    {#                                                                </div>#}
+                                                    {#                                                                <div class="modal-footer justify-content-between">#}
+                                                    {##}
+                                                    {#                                                                    <button type="button"#}
+                                                    {#                                                                            class="btn btn-primary data-dismiss="#}
+                                                    {#                                                                            modal#}
+                                                    {#                                                                    "">Close</button>#}
+                                                    {#                                                                </div>#}
+                                                    {#                                                            </div>#}
+                                                    {#                                                            <!-- /.modal-content -->#}
+                                                    {#                                                        </div>#}
+                                                    {#                                                        <!-- /.modal-dialog -->#}
+                                                    {#                                                    </div>#}
+                                                    {#                                                    <!-- /.modal -->#}
+
+
+                                                </div>
+
+                                            </div>
+                                            <!-- /.col -->
+
+
+                                        </div>
+                                        <!-- /.row -->
+                                </div>
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                                </form>
+                            </div>
+
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+
+<script src="{% static 'include/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDoWq203bF2ryiODCG7OQ4cizoiU6e1iLA",
+        authDomain: "rgit-hack.firebaseapp.com",
+        databaseURL: "https://rgit-hack.firebaseio.com",
+        projectId: "rgit-hack",
+        storageBucket: "rgit-hack.appspot.com",
+        messagingSenderId: "602679207194",
+        appId: "1:602679207194:web:69f0008bbf520f996578a3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+
+    function uploadimage(filename) {
+        var storage = firebase.storage();
+        var file = document.getElementById("document").files[0];
+        var storageRef = storage.ref();
+        var fileex = file.name.split('.').pop();
+        fileex = fileex.toLowerCase();
+        var filesize = file.size;
+
+        if (fileex === "pdf" || fileex === "jpg" || fileex === "jpeg" || fileex === "png") {
+            if (filesize < 5000000) {
+                var uploadTask = storageRef.child("tempuserdoc/" + filename + "." + fileex).put(file);
+                $('#modal-wait').modal('show');
+                uploadTask.on('state_changed', function (snapshot) {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            console.log('Upload is running');
+                            break;
+                    }
+                }, function (error) {
+                    // Handle unsuccessful uploads
+                }, function () {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                        $('#modal-wait').modal('hide');
+                        console.log('File available at', downloadURL);
+
+                        document.getElementById("fileurl").value = downloadURL;
+                        {#console.log(document.getElementById(viewfilelink));#}
+                        {#document.getElementById(viewfilelink).href = downloadURL;#}
+                        {#document.getElementById(viewfilelink).setAttribute('target', '_blank');#}
+                        {#document.getElementById(viewfilelink).className = "text-info";#}
+
+
+                    });
+                });
+            } else {
+
+                Swal.fire({
+                    icon: "error",
+                    title: 'File Size limit exceeded',
+                    text: 'Upload file less than 5 MB',
+                });
+            }
+
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: 'File Type not Allowed',
+                text: 'Upload only pdf,jpg,jpeg,png file',
+            });
+        }
+    }
+
+</script>
+
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }],
+                "order": [[0, "desc"]]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>
